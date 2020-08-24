@@ -11,13 +11,15 @@ window.Vue = require('vue');
 // urmatoarele 2 linii trebuiesc pentru a folosi vue-router -- vezi documentatia de la vue-router
 import VueRouter from 'vue-router'
 import dashboard from './components/Dashboard.vue'
+import users from './components/Users.vue'
 import profile from './components/Profile.vue'
 
 Vue.use(VueRouter)
 // folosesc let in loc de const deoarece la const nu mai poate fi modificat
 let routes = [
     { path: '/dashboard', component: dashboard },
-    { path: '/profile', component: profile }
+    { path: '/profile', component: profile },
+    { path: '/users', component: users }
   ]
 
 const router = new VueRouter({

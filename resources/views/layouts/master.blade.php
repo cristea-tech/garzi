@@ -81,8 +81,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </p>
                 </router-link>
               </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="grafic" class="nav-link">
+              <li class="nav-item has-treeview menu-close active">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-users blue"></i>
+                  <p>
+                    MANAGEMENT
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <router-link to="/users" tag="a" class="nav-link"  active-class="active" exact>
+                      <i class="fas fa-caret-right nav-icon blue"></i>
+                      <p>USERS</p>
+                    </router-link>
+                  </li>
+                </ul>
+              </li>
+          <li class="nav-item has-treeview menu-close">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog green"></i>
               <p>
                 GRAFIC GARZI SPITAL
@@ -90,6 +107,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
             <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="grafic" class="nav-link">
+                      <i class="fas fa-caret-right nav-icon green"></i>
+                      <p>GRAFIC GARZI</p>
+                    </a>
+                  </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="fas fa-caret-right nav-icon green"></i>
