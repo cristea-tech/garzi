@@ -8,13 +8,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>Grafic garzi medici</title>
 
  <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="hold-transition sidebar-mini text-sm">
-<div class="wrapper">
+<div class="wrapper" id="app">
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-dark navbar-danger">
@@ -67,8 +68,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-flat nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               <li class="nav-item">
+                <router-link to="/dashboard" class="nav-link active">
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>DASHBOARD</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/profile" class="nav-link active">
+                  <i class="nav-icon fas fa-id-badge"></i>
+                  <p>PROFILE
+                  </p>
+                </router-link>
+              </li>
           <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+            <a href="grafic" class="nav-link active">
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 GRAFIC GARZI SPITAL
@@ -115,7 +129,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             </ul>
           </li>
-
           <li class="nav-item">
                 <a class="nav-link active" href="{{ route('logout') }}" onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
@@ -156,8 +169,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Main content -->
     <div class="content">
-
-
+        <!-- aici mapeaza vue rutarea fisierelor -->
+        <!-- display the component content here -->
+        <router-view></router-view>
     </div>
     <!-- /.content -->
   </div>

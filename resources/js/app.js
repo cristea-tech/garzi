@@ -8,6 +8,19 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+// urmatoarele 2 linii trebuiesc pentru a folosi vue-router -- vezi documentatia de la vue-router
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+// folosesc let in loc de const deoarece la const nu mai poate fi modificat
+let routes = [
+    { path: 'dashboard', component: require('./components/Dashboard.vue') },
+    { path: 'profile', component: require('./components/Profile.vue') }
+  ]
+
+const router = new VueRouter({
+    routes // short for `routes: routes`
+  })
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -29,4 +42,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router
 });
