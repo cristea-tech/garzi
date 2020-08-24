@@ -10,15 +10,20 @@ window.Vue = require('vue');
 
 // urmatoarele 2 linii trebuiesc pentru a folosi vue-router -- vezi documentatia de la vue-router
 import VueRouter from 'vue-router'
+import dashboard from './components/Dashboard.vue'
+import profile from './components/Profile.vue'
+
 Vue.use(VueRouter)
 // folosesc let in loc de const deoarece la const nu mai poate fi modificat
 let routes = [
-    { path: 'dashboard', component: require('./components/Dashboard.vue') },
-    { path: 'profile', component: require('./components/Profile.vue') }
+    { path: '/dashboard', component: dashboard },
+    { path: '/profile', component: profile }
   ]
 
 const router = new VueRouter({
-    routes // short for `routes: routes`
+    mode: 'history',
+    routes, // short for `routes: routes`
+    linkActiveClass: 'active'
   })
 
 /**

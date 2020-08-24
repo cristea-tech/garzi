@@ -52961,6 +52961,8 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue");
+/* harmony import */ var _components_Profile_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -52971,18 +52973,22 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // urmatoarele 2 linii trebuiesc pentru a folosi vue-router -- vezi documentatia de la vue-router
 
 
+
+
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]); // folosesc let in loc de const deoarece la const nu mai poate fi modificat
 
 var routes = [{
-  path: 'dashboard',
-  component: __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue")
+  path: '/dashboard',
+  component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
 }, {
-  path: 'profile',
-  component: __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue")
+  path: '/profile',
+  component: _components_Profile_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  routes: routes // short for `routes: routes`
-
+  mode: 'history',
+  routes: routes,
+  // short for `routes: routes`
+  linkActiveClass: 'active'
 });
 /**
  * The following block of code may be used to automatically register your

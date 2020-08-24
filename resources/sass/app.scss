@@ -12,3 +12,10 @@ $fa-font-path: "../webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+
+.navbar-laravel {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba($color: #000000, $alpha: 0.04);
+}
+

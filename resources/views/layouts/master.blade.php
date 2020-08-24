@@ -69,21 +69,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                <li class="nav-item">
-                <router-link to="/dashboard" class="nav-link active">
-                  <i class="nav-icon fas fa-th"></i>
+                <router-link to="/dashboard" tag="a" class="nav-link"  active-class="active" exact>
+                  <i class="nav-icon fas fa-th blue"></i>
                   <p>DASHBOARD</p>
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/profile" class="nav-link active">
-                  <i class="nav-icon fas fa-id-badge"></i>
+                <router-link to="/profile" tag="a" class="nav-link"  active-class="active" exact>
+                  <i class="nav-icon fas fa-id-badge orange"></i>
                   <p>PROFILE
                   </p>
                 </router-link>
               </li>
           <li class="nav-item has-treeview menu-open">
-            <a href="grafic" class="nav-link active">
-              <i class="nav-icon fas fa-cog"></i>
+            <a href="grafic" class="nav-link">
+              <i class="nav-icon fas fa-cog green"></i>
               <p>
                 GRAFIC GARZI SPITAL
                 <i class="right fas fa-angle-left"></i>
@@ -92,37 +92,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-caret-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon green"></i>
                   <p>CHIRURGIE</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-caret-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon green"></i>
                   <p>MEDICINA INTERNA</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-caret-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon green"></i>
                   <p>CPU</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-caret-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon green"></i>
                   <p>ATI</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-caret-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon green"></i>
                   <p>OBST. GINECOLOGIE</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="fas fa-caret-right nav-icon"></i>
+                  <i class="fas fa-caret-right nav-icon green"></i>
                   <p>PEDIATRIE</p>
                 </a>
               </li>
@@ -130,10 +130,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <li class="nav-item">
-                <a class="nav-link active" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
-                       <i class="fas fa-sign-out-alt"></i>
-                       LOGOUT
+                       <i class="nav-icon fa fa-power-off red"></i>
+                       <p>LOGOUT</p>
                </a>
                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
@@ -150,29 +150,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Starter Page</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <div class="content">
+
         <!-- aici mapeaza vue rutarea fisierelor -->
         <!-- display the component content here -->
         <router-view></router-view>
-    </div>
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
