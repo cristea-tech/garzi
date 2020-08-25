@@ -7,6 +7,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import { Form, HasError, AlertError } from 'vform';
+
+window.Form = Form;
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
 
 // urmatoarele 2 linii trebuiesc pentru a folosi vue-router -- vezi documentatia de la vue-router
 import VueRouter from 'vue-router'
