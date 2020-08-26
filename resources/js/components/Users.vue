@@ -41,7 +41,7 @@
                     <a href="#">
                       <i class="fa fa-edit fa-fw blue"></i>
                     </a> /
-                    <a href="#">
+                    <a href="#" @click="deleteUser(user.id)">
                       <i class="fa fa-trash fa-fw red"></i>
                     </a>
                   </td>
@@ -125,7 +125,9 @@
 export default {
   data() {
     return {
+        // creez un obiect de tip user
       users : {},
+      // preiau valorile din form si initializez variabilele
       form: new Form({
         name: "",
         email: "",
@@ -136,21 +138,68 @@ export default {
     };
   },
   methods: {
+      // metoda de citire din baza de date a obiectelor user si initializarea variabilei de tip obiect users cu
+      // inregistrarile din tabela users
       loadUsers(){
           axios.get("api/user").then(({ data }) => (this.users = data.data));
       },
+      // functie pentru stergere user
+      deleteUser(id){
+          // configurez fereastra sweetalert ce trebuie afisata
+          Swal.fire({
+            title: 'Esti sigur ?',
+            text: "Userul nu mai poate fi restaurat !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, sterge !'
+            }).then((result) => {
+                // trimite id pentru stergere la user
+                if(result.value){
+                    this.form.delete('api/user/'+id)
+                    .then(()=>{
+                            Swal.fire(
+                            'Sters!',
+                            'Userul a fost sters !',
+                            'success'
+                            )
+                            Fire.$emit('AfterCreate');
 
+                    })
+                    .catch(()=>{
+                        Swal.fire("Atentie!", "Ceva este gresit!", "warning");
+                    });
+                }
+
+            })
+      },
       createUser(){
           this.$Progress.start();
-          this.form.post('api/user');
-          // semnalizez un eveniment AfterCreate cu metoda emit atasata la Fire
-          Fire.$emit('AfterCreate');
-          $('#addNew').modal('hide');
-          toast.fire({
-            icon: 'success',
-            title: 'User created successfully.'
-            });
-          this.$Progress.finish();
+          // aplic conditii de validare a raspunsului
+          this.form.post('api/user')
+          .then(()=>{
+              // daca crearea s-a efectuat cu succes atunci
+                // semnalizez un eveniment AfterCreate cu metoda emit atasata la Fire
+                Fire.$emit('AfterCreate');
+                // inchid fereastra modala
+                $('#addNew').modal('hide');
+                // deschid sweetalert cu mesaj de succes
+                toast.fire({
+                    icon: 'success',
+                    title: 'Userul a fost creat.'
+                    });
+                this.$Progress.finish();
+          })
+          .catch(()=>{
+              // daca apare eroare la creare
+              swal("Atentie!", "Userul nu a fost creat.", "warning");
+              toast.fire({
+                    icon: 'error',
+                    title: 'User nu s-a creat !'
+                    });
+          });
+
       }
   },
   created() {

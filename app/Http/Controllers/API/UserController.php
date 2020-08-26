@@ -74,6 +74,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // verific daca userul exista
+        $user = User::findOrFail($id);
+        // sterg userul
+        $user->delete();
+        return ['message' => 'Userul a fost sters!'];
     }
 }
