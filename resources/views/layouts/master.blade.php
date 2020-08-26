@@ -181,7 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- aici mapeaza vue rutarea fisierelor -->
         <!-- display the component content here -->
         <router-view></router-view>
-
+        <vue-progress-bar></vue-progress-bar>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

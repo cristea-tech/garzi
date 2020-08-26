@@ -7,6 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import moment from 'moment';
+// moment().format();
+
 import { Form, HasError, AlertError } from 'vform';
 
 window.Form = Form;
@@ -20,6 +23,35 @@ import users from './components/Users.vue'
 import profile from './components/Profile.vue'
 
 Vue.use(VueRouter)
+
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '3px'
+})
+
+// sweetalert2 -- documentation on https://sweetalert2.github.io/#examples
+// import sweetalert pentru notificari in fereastra
+import Swal from 'sweetalert2'
+window.Swal = Swal;
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+// stochez ca variabila globala pentru a putea fi accesata de oriunde
+  window.toast = Toast;
+
+
 // folosesc let in loc de const deoarece la const nu mai poate fi modificat
 let routes = [
     { path: '/dashboard', component: dashboard },
@@ -33,6 +65,19 @@ const router = new VueRouter({
     linkActiveClass: 'active'
   })
 
+  Vue.filter('upText', function(text){
+    return text.charAt(0).toUpperCase() + text.slice(1)
+  });
+
+  Vue.filter('myDate', function(created){
+      return moment(created).format("DD.MM.YYYY hh:mm:ss");
+  });
+
+  // creez o functie pentru a declansa refresh-ul paginii curente
+  // pentru a actualiza informatiile detinute de pagina
+
+     window.Fire = new Vue();
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -44,7 +89,7 @@ const router = new VueRouter({
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

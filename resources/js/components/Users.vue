@@ -19,24 +19,24 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+            <table id="tabel" class="table table-hover text-nowrap">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Type</th>
+                  <th>Adaugat</th>
                   <th>Modify</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td>
-                    <span class="tag tag-success">Approved</span>
-                  </td>
+                <tr v-for="user in users" :key="user.id">
+                  <td>{{user.id}}</td>
+                  <td>{{user.name | upText }}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.tip | upText}}</td>
+                  <td>{{user.created_at | myDate }}</td>
                   <td>
                     <a href="#">
                       <i class="fa fa-edit fa-fw blue"></i>
@@ -51,12 +51,7 @@
                 <tr>
                   <td colspan="4"></td>
                   <td>
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-sm"
-                      data-toggle="modal"
-                      data-target="#modal-default"
-                    >Add user</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNew">Add user <i class="fas fa-user-plus"></i></button>
                   </td>
                 </tr>
               </tfoot>
@@ -68,7 +63,7 @@
       </div>
     </div>
 
-    <div class="modal fade" id="modal-default">
+    <div class="modal fade" id="addNew">
       <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-primary">
@@ -78,12 +73,12 @@
             </button>
           </div>
           <div class="modal-body blue">
-              <form id="new_user" action="#" method="POST">
+              <form @submit.prevent="createUser">
                 <div class="card-body">
                     <div class="form-group">
                         <label>Nume:</label>
-                        <input v-model="form.nume" type="text" name="nume" class="form-control" :class="{ 'is-invalid': form.errors.has('nume') }"/>
-                        <has-error :form="form" field="nume"></has-error>
+                        <input v-model="form.name" type="text" name="name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }"/>
+                        <has-error :form="form" field="name"></has-error>
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
@@ -92,22 +87,20 @@
                     </div>
                     <div class="form-group">
                         <label>Parola:</label>
-                        <input v-model="form.parola" type="password" name="parola" class="form-control" :class="{ 'is-invalid': form.errors.has('parola') }"/>
-                        <has-error :form="form" field="parola"></has-error>
+                        <input v-model="form.password" type="password" name="password" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }"/>
+                        <has-error :form="form" field="password"></has-error>
                     </div>
                     <div class="form-group">
                         <label>Tip:</label>
                         <select name="tip" id="tip" v-model="form.tip" type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('tip') }">
-                            <option value="">Select user role</option>
+                            <option value="User" selected>User</option>
                             <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-
                         </select>
                         <has-error :form="form" field="tip"></has-error>
                     </div>
                     <div class="form-group">
                         <label>Descriere:</label>
-                        <textarea v-model="form.descriere" rows="3" type="textarea" name="descriere" class="form-control" :class="{ 'is-invalid': form.errors.has('descriere') }"/></textarea>
+                        <textarea v-model="form.descriere" rows="3" type="textarea" name="descriere" class="form-control" :class="{ 'is-invalid': form.errors.has('descriere') }"></textarea>
                         <has-error :form="form" field="descriere"></has-error>
                     </div>
                 </div>
@@ -132,17 +125,41 @@
 export default {
   data() {
     return {
+      users : {},
       form: new Form({
-        nume: "",
+        name: "",
         email: "",
-        parola: "",
+        password: "",
         tip: "",
         descriere: "",
       }),
     };
   },
-  mounted() {
-    console.log("Component mounted.");
+  methods: {
+      loadUsers(){
+          axios.get("api/user").then(({ data }) => (this.users = data.data));
+      },
+
+      createUser(){
+          this.$Progress.start();
+          this.form.post('api/user');
+          // semnalizez un eveniment AfterCreate cu metoda emit atasata la Fire
+          Fire.$emit('AfterCreate');
+          $('#addNew').modal('hide');
+          toast.fire({
+            icon: 'success',
+            title: 'User created successfully.'
+            });
+          this.$Progress.finish();
+      }
+  },
+  created() {
+    this.loadUsers();
+    // cand evenimentul AfterCreate este produs se declanseaza actualizarea paginii
+    Fire.$on('AfterCreate', () => {
+        this.loadUsers();
+    });
+    // setInterval(() => this.loadUsers(),3000);
   },
 };
 </script>
