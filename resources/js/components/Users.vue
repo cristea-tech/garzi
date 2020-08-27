@@ -19,7 +19,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table id="tabel" class="table table-hover text-nowrap">
+            <table id="lista_useri" class="table table-hover text-nowrap">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -38,7 +38,7 @@
                   <td>{{user.tip | upText}}</td>
                   <td>{{user.created_at | myDate }}</td>
                   <td>
-                    <a href="#">
+                    <a href="#" @click="editModal(user)">
                       <i class="fa fa-edit fa-fw blue"></i>
                     </a> /
                     <a href="#" @click="deleteUser(user.id)">
@@ -51,7 +51,7 @@
                 <tr>
                   <td colspan="4"></td>
                   <td>
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNew">Add user <i class="fas fa-user-plus"></i></button>
+                    <button type="button" class="btn btn-success btn-sm" @click="newModal">Add user <i class="fas fa-user-plus"></i></button>
                   </td>
                 </tr>
               </tfoot>
@@ -64,7 +64,7 @@
     </div>
 
     <div class="modal fade" id="addNew">
-      <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-primary">
             <h4 class="modal-title">Adaugare user nou</h4>
@@ -75,33 +75,44 @@
           <div class="modal-body blue">
               <form @submit.prevent="createUser">
                 <div class="card-body">
-                    <div class="form-group">
-                        <label>Nume:</label>
-                        <input v-model="form.name" type="text" name="name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }"/>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nume</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.name" type="text" name="name" placeholder="nume utilizator" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }"/>
                         <has-error :form="form" field="name"></has-error>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input v-model="form.email" type="email" name="email" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }"/>
-                        <has-error :form="form" field="email"></has-error>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="email">Email</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.email" type="email" name="email" placeholder="email utilizator" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }"/>
+                            <has-error :form="form" field="email"></has-error>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Parola:</label>
-                        <input v-model="form.password" type="password" name="password" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }"/>
-                        <has-error :form="form" field="password"></has-error>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Parola</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.password" type="password" name="password" placeholder="parola utilizator" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }"/>
+                            <has-error :form="form" field="password"></has-error>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Tip:</label>
-                        <select name="tip" id="tip" v-model="form.tip" type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('tip') }">
-                            <option value="User" selected>User</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                        <has-error :form="form" field="tip"></has-error>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Rol</label>
+                        <div class="col-sm-10">
+                            <select name="tip" id="tip" v-model="form.tip" type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('tip') }">
+                                <option value="" selected disabled>rol user</option>
+                                <option value="User">User</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                            <has-error :form="form" field="tip"></has-error>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Descriere:</label>
-                        <textarea v-model="form.descriere" rows="3" type="textarea" name="descriere" class="form-control" :class="{ 'is-invalid': form.errors.has('descriere') }"></textarea>
-                        <has-error :form="form" field="descriere"></has-error>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Descriere</label>
+                        <div class="col-sm-10">
+                            <textarea v-model="form.descriere" rows="3" type="textarea" placeholder="descriere utilizator" name="descriere" class="form-control" :class="{ 'is-invalid': form.errors.has('descriere') }"></textarea>
+                            <has-error :form="form" field="descriere"></has-error>
+                        </div>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -122,6 +133,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -138,10 +150,20 @@ export default {
     };
   },
   methods: {
+      // folosesc o functie pentru a deschide fereastra modala
+      newModal(){
+          this.form.reset();
+          $('#addNew').modal('show');
+      },
+      editModal(user){
+          this.form.reset();
+          $('#addNew').modal('show');
+          this.form.fill(user);
+      },
       // metoda de citire din baza de date a obiectelor user si initializarea variabilei de tip obiect users cu
       // inregistrarile din tabela users
       loadUsers(){
-          axios.get("api/user").then(({ data }) => (this.users = data.data));
+          axios.get("api/user").then(({ data }) => (this.users = data));
       },
       // functie pentru stergere user
       deleteUser(id){

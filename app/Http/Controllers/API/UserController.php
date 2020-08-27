@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        // return User::all();
-        return User::latest()->paginate(100);
+        return User::all();
+
+       // return User::latest()->paginate(100);
     }
 
     /**
@@ -29,8 +31,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users',
+            'name' => 'required|string|max:100',
+            'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:3'
 
         ]);
