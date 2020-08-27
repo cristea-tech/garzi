@@ -19,7 +19,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table id="lista_useri" class="table table-hover text-nowrap">
+            <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -99,9 +99,8 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Rol</label>
                         <div class="col-sm-10">
-                            <select name="tip" id="tip" v-model="form.tip" type="text" class="form-control" :class="{ 'is-invalid': form.errors.has('tip') }">
-                                <option value="" selected disabled>rol user</option>
-                                <option value="User">User</option>
+                            <select name="tip" id="tip" type="text" v-model="form.tip" class="form-control" :class="{ 'is-invalid': form.errors.has('tip') }">
+                                <option value="User" selected>User</option>
                                 <option value="Admin">Admin</option>
                             </select>
                             <has-error :form="form" field="tip"></has-error>
@@ -110,7 +109,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Descriere</label>
                         <div class="col-sm-10">
-                            <textarea v-model="form.descriere" rows="3" type="textarea" placeholder="descriere utilizator" name="descriere" class="form-control" :class="{ 'is-invalid': form.errors.has('descriere') }"></textarea>
+                            <textarea v-model="form.descriere" rows="3" type="textarea" placeholder="descriere utilizator (optional)" name="descriere" class="form-control" :class="{ 'is-invalid': form.errors.has('descriere') }"></textarea>
                             <has-error :form="form" field="descriere"></has-error>
                         </div>
                     </div>
