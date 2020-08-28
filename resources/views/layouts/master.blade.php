@@ -81,6 +81,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </p>
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link to="/developer" tag="a" class="nav-link"  active-class="active" exact>
+                  <i class="nav-icon fas fa-cogs"></i>
+                  <p>DEVELOPER
+                  </p>
+                </router-link>
+              </li>
               <li class="nav-item has-treeview menu-close active">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-users blue"></i>

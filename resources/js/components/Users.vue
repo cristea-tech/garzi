@@ -66,14 +66,20 @@
     <div class="modal fade" id="addNew">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header bg-primary">
+          <div v-show="editmode" class="modal-header bg-success">
+            <h4 class="modal-title">Actualizare user</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div v-show="!editmode" class="modal-header bg-primary">
             <h4 class="modal-title">Adaugare user nou</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body blue">
-              <form @submit.prevent="createUser">
+              <form @submit.prevent="editmode ? updateUser(user) : createUser()">
                 <div class="card-body">
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nume</label>
@@ -117,7 +123,8 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Inchide</button>
-                    <button type="submit" class="btn btn-primary btn-sm float-right">Salveaza</button>
+                    <button v-show="editmode" type="submit" class="btn btn-success btn-sm float-right">Update</button>
+                    <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm float-right">Salveaza</button>
               </div>
               </form>
           </div>
@@ -136,10 +143,13 @@
 export default {
   data() {
     return {
+      // setez o variabila ca sa-mi spuna cand fereastra modala e in editModel sau in addModel
+      editmode: true,
         // creez un obiect de tip user
       users : {},
       // preiau valorile din form si initializez variabilele
       form: new Form({
+        id: "",
         name: "",
         email: "",
         password: "",
@@ -149,12 +159,35 @@ export default {
     };
   },
   methods: {
+      updateUser(){
+        //   console.log('Editare user');
+        this.$Progress.start();
+        this.form.put('api/user/'+ this.form.id)
+        .then(()=>{
+            // success
+             Swal.fire(
+                'Actualizat !',
+                'Userul a fost actualizat !',
+                'success'
+            );
+            $('#addNew').modal('hide');
+            this.$Progress.finish();
+            Fire.$emit('AfterCreate');
+        })
+        .catch(()=>{
+            // eroare
+            this.$Progress.fail();
+        });
+
+      },
       // folosesc o functie pentru a deschide fereastra modala
       newModal(){
+          this.editmode = false;
           this.form.reset();
           $('#addNew').modal('show');
       },
       editModal(user){
+          this.editmode = true;
           this.form.reset();
           $('#addNew').modal('show');
           this.form.fill(user);
@@ -213,6 +246,7 @@ export default {
                 this.$Progress.finish();
           })
           .catch(()=>{
+              this.$Progress.fail();
               // daca apare eroare la creare
               swal("Atentie!", "Userul nu a fost creat.", "warning");
               toast.fire({

@@ -13,28 +13,29 @@ import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
 
 window.Form = Form;
-Vue.component(HasError.name, HasError)
-Vue.component(AlertError.name, AlertError)
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
 
 // urmatoarele 2 linii trebuiesc pentru a folosi vue-router -- vezi documentatia de la vue-router
-import VueRouter from 'vue-router'
-import dashboard from './components/Dashboard.vue'
-import users from './components/Users.vue'
-import profile from './components/Profile.vue'
+import VueRouter from 'vue-router';
+import dashboard from './components/Dashboard.vue';
+import users from './components/Users.vue';
+import profile from './components/Profile.vue';
+import developer from './components/Developer.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-import VueProgressBar from 'vue-progressbar'
+import VueProgressBar from 'vue-progressbar';
 
 Vue.use(VueProgressBar, {
   color: 'rgb(143, 255, 199)',
   failedColor: 'red',
   height: '3px'
-})
+});
 
 // sweetalert2 -- documentation on https://sweetalert2.github.io/#examples
 // import sweetalert pentru notificari in fereastra
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 window.Swal = Swal;
 
 const Toast = Swal.mixin({
@@ -47,7 +48,7 @@ const Toast = Swal.mixin({
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
-  })
+  });
 // stochez ca variabila globala pentru a putea fi accesata de oriunde
   window.toast = Toast;
 
@@ -56,14 +57,15 @@ const Toast = Swal.mixin({
 let routes = [
     { path: '/dashboard', component: dashboard },
     { path: '/profile', component: profile },
+    { path: '/developer', component: developer },
     { path: '/users', component: users }
-  ]
+  ];
 
 const router = new VueRouter({
     mode: 'history',
     routes, // short for `routes: routes`
     linkActiveClass: 'active'
-  })
+  });
 
   Vue.filter('upText', function(text){
     return text.charAt(0).toUpperCase() + text.slice(1)
@@ -97,7 +99,30 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
+
 const app = new Vue({
     el: '#app',
     router
 });
+
+// folosit la autentificare cu token
+window.axios.defaults.headers.common = {
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRF-TOKEN": document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
+};
