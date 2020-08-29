@@ -178,12 +178,24 @@
                 let file = e.target.files[0];
                 console.log(file);
                 let reader = new FileReader();
-
-                reader.onloadend = (file)=>{
+                // verific daca fisierul e mai mic de 2mb
+                if(file['size']< 2111775){
+                    reader.onloadend = (file)=>{
                     // console.log('RESULT', reader.result)
                     this.form.photo = reader.result;
                 }
                 reader.readAsDataURL(file);
+                }else{
+                    // daca fiserul e mai mare de 2mb afisez eroare de operare
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Eroare dimensiune fisier !',
+                        text:'Nu pot fi incarcate imagini mai mari de 2mb !',
+                        //footer: 'ceva in footer'
+                        });
+                }
+
+
             }
         },
         created() {

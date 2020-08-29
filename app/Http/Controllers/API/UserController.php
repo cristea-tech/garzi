@@ -64,7 +64,21 @@ class UserController extends Controller
     {
         $user = auth('api')->user();
         // return ['message' => "Success"];
-        return $request->photo;
+        if($request->photo){
+            // creez un string unic cu numele pozei
+            // pentru asta folosesc functia time ce genereaza un string unic la data curenta
+            // apoi concatenez cu extensia fisierului pe care o extrag din request
+            // folosesc functia explode pentru a sparge textul photo in substringuri
+            // intai caut dupa ';' si fac un string dintre pozitia 0 si pozitia lui ';'
+            // apoi sparg stringul in elemente cu despartitor ':' si iau primul element gasit
+            // apoi sparg stringul in elemente cu despartitor '/' si iau primul element gasit
+            // rezultatul va fi de genul time_value.extension
+
+            $name = time().'.'.explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+            // folosim image.intervention pentru a prelucra poza
+            \Image::make($request->photo)->save(public_path('img/profile/').$name);
+
+        };
     }
 
     public function profile()
