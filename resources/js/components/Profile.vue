@@ -114,6 +114,13 @@
                         </div>
                       </div>
                       <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Parola</label>
+                        <div class="col-sm-10">
+                            <input v-model="form.password" type="password" name="password" placeholder="parola utilizator" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }"/>
+                            <has-error :form="form" field="password"></has-error>
+                        </div>
+                    </div>
+                      <div class="form-group row">
                         <label for="descriere" class="col-sm-2 col-form-label">Descriere</label>
                         <div class="col-sm-10">
                           <textarea v-model="form.descriere" id="descriere" placeholder="descriere" class="form-control" :class="{ 'is-invalid': form.errors.has('descriere') }"></textarea>
@@ -165,18 +172,27 @@
         },
         methods:{
             updateInfo(){
+                // afisez bara de progres incarcare
+                this.$Progress.start();
                 this.form.put('api/profile')
                 .then(()=>{
 
+                    // opresc bara de progres
+                    this.$Progress.finish();
                 })
                 .catch(()=>{
 
+                    // opresc bara de progres cu fail pentru a indica o eroare
+                    this.$Progress.fail();
                 });
             },
             updateProfile(e){
                 // console.log('uploading');
+                // definesc o variabila in care stochez fisierul
                 let file = e.target.files[0];
+                // trimit informatii la consola pentru a verifica daca fisierul a fost incarcat
                 console.log(file);
+                // folosesc conversia fisierului la Base64 si transform imaginea in text
                 let reader = new FileReader();
                 // verific daca fisierul e mai mic de 2mb
                 if(file['size']< 2111775){

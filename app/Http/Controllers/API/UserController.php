@@ -63,8 +63,22 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $user = auth('api')->user();
+
+        $this->validate($request,[
+            // existenta numelui este importanta dar nu este de tip unic
+            'name' => 'required|string|max:100',
+            // verific existenta emailului dar nu pentru userul curent !!! important
+            // emailul este de tip unic
+            'email' => 'required|string|email|max:100|unique:users,email,'.$user->id,
+            // verific existenta parolei ... si specific ca uneori nu este necesara daca nu s-a momdificat
+            'password' => 'sometimes|required|min:3'
+        ]);
+
         // return ['message' => "Success"];
-        if($request->photo){
+        // definesc o variabila in care stochez poza initiala pentru a o verifica ulterior cu cea incarcata
+        // si pentru a putea stabili daca a fost modificata sau nu
+        $currentPhoto = $user->photo;
+        if($request->photo != $currentPhoto){
             // creez un string unic cu numele pozei
             // pentru asta folosesc functia time ce genereaza un string unic la data curenta
             // apoi concatenez cu extensia fisierului pe care o extrag din request
@@ -78,7 +92,15 @@ class UserController extends Controller
             // folosim image.intervention pentru a prelucra poza
             \Image::make($request->photo)->save(public_path('img/profile/').$name);
 
+            // initializez valoarea transmisa prin request cu noul nume de fisier stocat pe server si prelucrat cu nume unic
+            // si dupa iesirea din if, fac update pe campurile din tabela users
+
+            // pentru a modifica o valoare din request folosesc functia merge
+            $request->merge(['photo' => $name]);
+
         };
+        $user->update($request->all());
+        return ['message'=> 'Success'];
     }
 
     public function profile()
