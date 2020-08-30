@@ -97,8 +97,20 @@ class UserController extends Controller
 
             // pentru a modifica o valoare din request folosesc functia merge
             $request->merge(['photo' => $name]);
+            // daca userul a schimbat poza de profil o stergem pe cea veche
+            // stochez numele si calea intro variabila
+            $userPhoto = public_path('img/profile/').$currentPhoto;
+            // verific daca fisierul exista in folder si i-l sterg
+            if(file_exists($userPhoto)){
+                @unlink($userPhoto);
+            }
 
         };
+
+        if(!empty($request->password)){
+            $request->merge(['password' => Hash::make($request['password'])]);
+        }
+
         $user->update($request->all());
         return ['message'=> 'Success'];
     }
