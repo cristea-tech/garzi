@@ -21,24 +21,24 @@
                         <div class="row">
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                            <h5 class="description-header">{{ this.form.name }}</h5>
-                            <span class="description-text">{{ this.form.descriere }}</span>
+                            <h5 class="description-header">User logat </h5>
+                            <span class="description-text">{{ this.form.name }}</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                            <h5 class="description-header">13,000</h5>
-                            <span class="description-text">FOLLOWERS</span>
+                            <h5 class="description-header">Ultima modificare</h5>
+                            <span class="description-text">30.08.2020 15.08.06</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4">
                             <div class="description-block">
-                            <h5 class="description-header">35</h5>
-                            <span class="description-text">PRODUCTS</span>
+                            <h5 class="description-header">IP STATIE</h5>
+                            <span class="description-text">192.168.1.200</span>
                             </div>
                             <!-- /.description-block -->
                         </div>

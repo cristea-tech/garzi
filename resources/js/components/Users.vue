@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Users Table</h3>
+            <h3 class="card-title">Tabela utilizatori</h3>
 
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
@@ -23,11 +23,11 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
+                  <th>Nume</th>
                   <th>Email</th>
-                  <th>Type</th>
+                  <th>Rol</th>
                   <th>Adaugat</th>
-                  <th>Modify</th>
+                  <th>Modificat</th>
                 </tr>
               </thead>
               <tbody>
@@ -51,7 +51,7 @@
                 <tr>
                   <td colspan="4"></td>
                   <td>
-                    <button type="button" class="btn btn-success btn-sm" @click="newModal">Add user <i class="fas fa-user-plus"></i></button>
+                    <button type="button" class="btn btn-success btn-sm" @click="newModal">Creare user <i class="fas fa-user-plus"></i></button>
                   </td>
                 </tr>
               </tfoot>
