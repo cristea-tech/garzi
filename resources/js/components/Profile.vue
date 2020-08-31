@@ -10,10 +10,9 @@
         <div class="row">
             <div class="col-md-12 mt-3">
                 <div class="card card-widget widget-user">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header text-white" style="background-color:#f6993f">
-                        <h3 class="widget-user-username text-right">{{ this.form.name }}</h3>
-                        <h5 class="widget-user-desc text-right">{{ this.form.descriere }}</h5>
+                    <!-- Add the bg image to the header using any of the bg-* classes -->
+                    <div class="widget-user-header text-black" style="background-image: url('./img/user-cover.jpg')">
+
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
@@ -22,8 +21,8 @@
                         <div class="row">
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                            <h5 class="description-header">3,200</h5>
-                            <span class="description-text">SALES</span>
+                            <h5 class="description-header">{{ this.form.name }}</h5>
+                            <span class="description-text">{{ this.form.descriere }}</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
