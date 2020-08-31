@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row mt-5">
+    <div class="row mt-5" v-if="$gate.isAdmin()">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
@@ -195,7 +195,10 @@ export default {
       // metoda de citire din baza de date a obiectelor user si initializarea variabilei de tip obiect users cu
       // inregistrarile din tabela users
       loadUsers(){
-          axios.get("api/user").then(({ data }) => (this.users = data));
+          if(this.$gate.isAdmin())
+          {
+              axios.get("api/user").then(({ data }) => (this.users = data));
+          }
       },
       // functie pentru stergere user
       deleteUser(id){

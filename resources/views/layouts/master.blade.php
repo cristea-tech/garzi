@@ -81,6 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </p>
                 </router-link>
               </li>
+              @can('isAdmin')
               <li class="nav-item">
                 <router-link to="/developer" tag="a" class="nav-link"  active-class="active" exact>
                   <i class="nav-icon fas fa-cogs"></i>
@@ -88,6 +89,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </p>
                 </router-link>
               </li>
+              @endcan
+              @can('isAdmin')
               <li class="nav-item has-treeview menu-close active">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-users blue"></i>
@@ -105,6 +108,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
+              @endcan
           <li class="nav-item has-treeview menu-close">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog green"></i>
@@ -216,11 +220,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2020-2025 <a href="https://www.spitalcampina.ro">Claudiu Cristea</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2020-2025 <a href="https://www.spitalcampina.ro">Spitalul Municipal Campina</a>.</strong> All rights reserved.
   </footer>
 </div>
 <!-- ./wrapper -->
 
+@auth
+    <script>
+        window.user = @JSON(auth()->user());
+    </script>
+@endauth
 <!-- REQUIRED SCRIPTS -->
 
 <script src="/js/app.js"></script>

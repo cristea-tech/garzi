@@ -21,24 +21,24 @@
                         <div class="row">
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                            <h5 class="description-header">User logat </h5>
-                            <span class="description-text">{{ this.form.name }}</span>
+                                <h5 class="description-header">User logat </h5>
+                                <span class="description-text">{{ this.form.name }}</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                             <div class="description-block">
-                            <h5 class="description-header">Ultima modificare</h5>
-                            <span class="description-text">30.08.2020 15.08.06</span>
+                                <h5 class="description-header">Ultima modificare</h5>
+                                <span class="description-text">30.08.2020 15.08.06</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4">
                             <div class="description-block">
-                            <h5 class="description-header">IP STATIE</h5>
-                            <span class="description-text">192.168.1.200</span>
+                                <h5 class="description-header">IP STATIE</h5>
+                                <span class="description-text">192.168.1.200</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
@@ -179,6 +179,12 @@
             updateInfo(){
                 // afisez bara de progres incarcare
                 this.$Progress.start();
+                // daca userul pune parola in campul de parola si apoi sterge parola
+                // campul de parola va avea valoarea undefined
+               if(this.form.password == ''){
+                    this.form.password = undefined;
+                }
+
                 this.form.put('api/profile')
                 .then(()=>{
                     // opresc bara de progres si afisez mesaj de success

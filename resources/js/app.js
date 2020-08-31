@@ -9,8 +9,18 @@ require('./bootstrap');
 window.Vue = require('vue');
 import moment from 'moment';
 // moment().format();
-
 import { Form, HasError, AlertError } from 'vform';
+
+// importam clasa creata Gate din fisierul Gate.js
+import Gate from "./Gate";
+// definesc $gate de tip prototip in javascript insemnand ca poate fi accesat de oriunde
+// folosind sintaxa this.$gate sau chiar si $gate
+Vue.prototype.$gate = new Gate(window.user);
+/* apoi voi folosi pentru verificare in components sintaxa
+            @auth
+                window.user = @JSON(auth()->user());
+            @endauth */
+
 
 window.Form = Form;
 Vue.component(HasError.name, HasError);

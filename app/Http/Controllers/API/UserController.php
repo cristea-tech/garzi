@@ -155,6 +155,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
+
         // verific daca userul exista
         $user = User::findOrFail($id);
         // sterg userul
