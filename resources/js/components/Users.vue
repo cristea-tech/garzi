@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row mt-5" v-if="$gate.isAdmin()">
+    <div class="row mt-5" v-if="$gate.isAdminOrAuthor()">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <div v-if="!$gate.isAdmin()">
+    <div v-if="!$gate.isAdminOrAuthor()">
         <not-found></not-found>
     </div>
     <div class="modal fade" id="addNew">
@@ -198,7 +198,7 @@ export default {
       // metoda de citire din baza de date a obiectelor user si initializarea variabilei de tip obiect users cu
       // inregistrarile din tabela users
       loadUsers(){
-          if(this.$gate.isAdmin())
+          if(this.$gate.isAdminOrAuthor())
           {
               axios.get("api/user").then(({ data }) => (this.users = data));
           }

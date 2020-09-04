@@ -10,5 +10,15 @@ export default class Gate{
     isUser(){
         return this.user.tip === 'User';
     }
+    isAdminOrAuthor(){
+        if(this.user.tip === 'Admin' || this.user.tip === 'Author'){
+            return true;
+        }
+    }
+    isAuthorOrAuthor(){
+        if(this.user.tip === 'User' || this.user.tip === 'Author'){
+            return true;
+        }
+    }
 
 }

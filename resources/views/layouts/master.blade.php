@@ -90,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               @endcan
-             {{-- @can('isAdmin') --}}
+             @can('isAdmin')
               <li class="nav-item has-treeview menu-close active">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-users blue"></i>
@@ -108,7 +108,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
-              {{-- @endcan --}}
+              @endcan
           <li class="nav-item has-treeview menu-close">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog green"></i>
