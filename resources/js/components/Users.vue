@@ -63,6 +63,9 @@
       </div>
     </div>
 
+    <div v-if="!$gate.isAdmin()">
+        <not-found></not-found>
+    </div>
     <div class="modal fade" id="addNew">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

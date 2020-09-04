@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,7 +22,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        // $this->authorize('isAdmin');
+        if(Gate::allows('isAdmin') || Gate::allows('isAuthor')){
+            return User::all();
+        }
 
        // return User::latest()->paginate(100);
     }
