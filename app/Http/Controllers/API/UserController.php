@@ -24,10 +24,10 @@ class UserController extends Controller
     {
         // $this->authorize('isAdmin');
         if(Gate::allows('isAdmin') || Gate::allows('isAuthor')){
-            return User::all();
+            // return User::all();
+            return User::latest()->paginate(5);
         }
 
-       // return User::latest()->paginate(100);
     }
 
     /**

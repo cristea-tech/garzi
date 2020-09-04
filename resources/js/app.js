@@ -128,6 +128,10 @@ Vue.component(
     require('./components/NotFound.vue').default
 );
 
+// folosesc pachetul vue pagination pentru a afisa in tabela paginarea folosind vue
+Vue.component('pagination', require('laravel-vue-pagination'));
+
+
 const app = new Vue({
     el: '#app',
     router
