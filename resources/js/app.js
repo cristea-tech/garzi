@@ -142,9 +142,13 @@ const app = new Vue({
     },
     methods:{
         // definesc o functie care se initiaza cand fac cautare in pagina
-        searchit(){
-            // console.log("searching ...");
+        searchit: _.debounce(()=>{
             Fire.$emit('searching');
+            // console.log("searching ...");
+        },1000),
+        // definesc o functie de printare
+        printme(){
+            window.print();
         }
     }
 });
