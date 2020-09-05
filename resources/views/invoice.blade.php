@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-<section class="content">
-    <div class="container-fluid">
+@section('content')
+    <div class="container">
       <div class="row">
         <div class="col-12">
           <div class="callout callout-info">
@@ -167,5 +167,5 @@
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
-  </section>
+@endsection
   <!-- /.content -->
