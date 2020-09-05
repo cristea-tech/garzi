@@ -8,12 +8,7 @@
 
             <div class="card-tools">
               <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search"/>
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
+                   <button type="button" class="btn btn-success btn-sm float-sm-right" @click="newModal">Creare user <i class="fas fa-user-plus"></i></button>
               </div>
             </div>
           </div>
@@ -47,18 +42,10 @@
                   </td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="4"></td>
-                  <td>
-                    <button type="button" class="btn btn-success btn-sm" @click="newModal">Creare user <i class="fas fa-user-plus"></i></button>
-                  </td>
-                </tr>
-              </tfoot>
             </table>
           </div>
           <div class="card-footer">
-              <pagination :data="users" @pagination-change-page="getResults"></pagination>
+                    <pagination :data="users" @pagination-change-page="getResults"></pagination>
           </div>
           <!-- /.card-body -->
 
@@ -274,6 +261,21 @@ export default {
       }
   },
   created() {
+      Fire.$on('searching',()=>{
+          let query = this.$parent.search;
+          axios.get('api/findUser?q='+query)
+          .then((data)=>{
+              this.users = data.data;
+          })
+          .catch(()=>{
+              this.$Progress.fail();
+              swal("Atentie!", "Eroare la cautare.", "warning");
+              toast.fire({
+                    icon: 'error',
+                    title: 'S-a produs o eroare la cautare !'
+                    });
+          });
+      });
     this.loadUsers();
     // cand evenimentul AfterCreate este produs se declanseaza actualizarea paginii
     Fire.$on('AfterCreate', () => {

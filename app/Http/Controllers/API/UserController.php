@@ -167,4 +167,14 @@ class UserController extends Controller
         $user->delete();
         return ['message' => 'Userul a fost sters!'];
     }
+    public function search(){
+        if($search = \Request::get('q')){
+            $users = User::where(function($query) use ($search){
+                $query->where('name', 'LIKE', "%$search%")
+                ->orWhere('email', 'LIKE', "%$search%")
+                ->orWhere('tip', 'LIKE', "%$search%");
+            })->paginate(5);
+        }
+        return $users;
+    }
 }

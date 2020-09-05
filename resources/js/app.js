@@ -32,6 +32,7 @@ import dashboard from './components/Dashboard.vue';
 import users from './components/Users.vue';
 import profile from './components/Profile.vue';
 import developer from './components/Developer.vue';
+import notFound from './components/NotFound.vue';
 
 Vue.use(VueRouter);
 
@@ -68,8 +69,9 @@ let routes = [
     { path: '/dashboard', component: dashboard },
     { path: '/profile', component: profile },
     { path: '/developer', component: developer },
-    { path: '/users', component: users }
-  ];
+    { path: '/users', component: users },
+    { path: '*', component: notFound }
+];
 
 const router = new VueRouter({
     mode: 'history',
@@ -124,7 +126,7 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue').default
 );
 Vue.component(
-    'not-found',
+    'notFound',
     require('./components/NotFound.vue').default
 );
 
@@ -134,7 +136,17 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data: {
+        search: ''
+    },
+    methods:{
+        // definesc o functie care se initiaza cand fac cautare in pagina
+        searchit(){
+            // console.log("searching ...");
+            Fire.$emit('searching');
+        }
+    }
 });
 
 // folosit la autentificare cu token
